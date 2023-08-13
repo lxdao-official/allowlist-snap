@@ -33,7 +33,7 @@ export const onTransaction: OnTransactionHandler = async ({ transaction }) => {
 
   if (boolResult) return {
     content: panel([
-      heading('Transaction insights snap'),
+      heading('allowlist snap'),
       text(
         `The "to" address of this transaction is trustworthy.`,
         // `**${result}%**`
@@ -42,7 +42,7 @@ export const onTransaction: OnTransactionHandler = async ({ transaction }) => {
   };
   else return {
     content: panel([
-      heading('Transaction insights snap'),
+      heading('allowlist snap'),
       text(
         `The "to" address of this transaction is untrustworthy`,
       ),

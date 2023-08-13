@@ -1,13 +1,13 @@
 {
   "version": "0.1.0",
-  "description": "An example Snap written in TypeScript.",
-  "proposedName": "TypeScript Example Snap",
+  "description": "Allowlist Snap.",
+  "proposedName": "Allowlist Snap",
   "repository": {
     "type": "git",
     "url": "https://github.com/MetaMask/template-snap-monorepo.git"
   },
   "source": {
-    "shasum": "IHaLMJSqqoiAB6TeG8vUe5xMaQvz83DOUBvIxrUz6Ik=",
+    "shasum": "r0faTQIpabkqyjsyTH5utrWS6ySOqCUi+XXqQzjCdy4=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
