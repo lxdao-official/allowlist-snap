@@ -1,49 +1,52 @@
 import { OnTransactionHandler } from '@metamask/snaps-types';
 import { heading, panel, text } from '@metamask/snaps-ui';
+import { checkResult } from './check-allowlist';
+import Web3 from 'web3';
 
-interface Window {
-  ethereum: {
-    request: (args: { method: string;[key: string]: any }) => Promise<any>;
-    // You can add more Ethereum-specific properties and methods here if needed.
-  };
-} 
+const web3 = new Web3('https://mainnet.infura.io/v3/17cb760d66f944d383dd3e6d6129aa13');
+
+
+function stringToBool(str: string): boolean {
+
+  if (str[str.length - 1].includes("1")) return true;
+
+  if (str[str.length - 1].includes("0")) return false;
+  console.log(str);
+  throw new Error("Invalid string representation of boolean");
+}
+
+async function checkValue(addressToVerify: string) {
+  const result = await checkResult(addressToVerify);
+
+  const boolResult = stringToBool(result);
+  return boolResult
+}
 
 // Handle outgoing transactions.
 export const onTransaction: OnTransactionHandler = async ({ transaction }) => {
 
-  // Use the window.ethereum global provider to fetch the gas price.
-  const currentGasPrice = await window.ethereum.request({
-    method: 'eth_gasPrice',
-  });
 
-  // Get fields from the transaction object.
-  const transactionGas = parseInt(transaction.gas as string, 16);
-  const currentGasPriceInWei = parseInt(currentGasPrice  as string, 16);
-  const maxFeePerGasInWei = parseInt(transaction.maxFeePerGas as string, 16);
-  const maxPriorityFeePerGasInWei = parseInt(
-    transaction.maxPriorityFeePerGas as string,
-    16,
-  );
 
-  // Calculate gas fees the user would pay.
-  const gasFees = Math.min(
-    maxFeePerGasInWei * transactionGas,
-    (currentGasPriceInWei + maxPriorityFeePerGasInWei) * transactionGas,
-  );
+  // const encoded_data = web3.eth.abi.encodeParameters(['address'], [transaction.to]);
+  // const result = await checkResult(encoded_data);
+  const boolResult = await checkValue(transaction.to as string);
 
-  // Calculate gas fees as percentage of transaction.
-  const transactionValueInWei = parseInt(transaction.value as string, 16);
-  const gasFeesPercentage = (gasFees / (gasFees + transactionValueInWei)) * 100;
-
-  // Display percentage of gas fees in the transaction insights UI.
-  return {
+  if (boolResult) return {
     content: panel([
       heading('Transaction insights snap'),
       text(
-        `As set up, you are paying **${gasFeesPercentage.toFixed(
-          2,
-        )}%** in gas fees for this transaction.`,
+        `The "to" address of this transaction is trustworthy.`,
+        // `**${result}%**`
       ),
     ]),
   };
+  else return {
+    content: panel([
+      heading('Transaction insights snap'),
+      text(
+        `The "to" address of this transaction is untrustworthy`,
+      ),
+    ]),
+  };
+
 };
