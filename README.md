@@ -1,3 +1,4 @@
+# allowlist-snap
 # @metamask/template-snap-monorepo
 
 This repository demonstrates how to develop a snap with TypeScript. For detailed instructions, see [the MetaMask documentation](https://docs.metamask.io/guide/snaps.html#serving-a-snap-to-your-local-environment).
@@ -76,4 +77,4 @@ The project follows the same release process as the other libraries in the MetaM
 
 - Babel is used for transpiling TypeScript to JavaScript, so when building with the CLI,
   `transpilationMode` must be set to `localOnly` (default) or `localAndDeps`.
-# allowlist-snap
+
