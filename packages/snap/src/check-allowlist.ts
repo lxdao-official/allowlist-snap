@@ -1,10 +1,12 @@
 import { OnTransactionHandler } from '@metamask/snaps-types';
 import Web3 from 'web3';
 
-
 // initiate an instance of Web3
-const web3 = new Web3('https://linea-goerli.infura.io/v3/e0f8e927116448549412b47e1f12bfe9');
-const smartContractAddress = '0x7b6D707583e25afF72DF7f13024F6E3D8C5216C9';
+const web3 = new Web3(
+  'https://linea-goerli.infura.io/v3/e0f8e927116448549412b47e1f12bfe9'
+);
+// Contract repo: https://github.com/lxdao-official/allowlist-contract
+const smartContractAddress = '0x27e8cBA14010e413944E057D3A0327a20b22F99F';
 
 /**
  * Invoke allowlist verify RPC API in allowlist snap.
@@ -13,17 +15,20 @@ const smartContractAddress = '0x7b6D707583e25afF72DF7f13024F6E3D8C5216C9';
  * @returns The result of allowlist verify RPC API.
  */
 export async function checkResult(addressToVerify?: string) {
+  const functionSignature = '0x63a9c3d7';
 
-  const functionSignature = "0x63a9c3d7";
-
-  const encodedParams = web3.eth.abi.encodeParameters(['address'], [addressToVerify]);
+  const encodedParams = web3.eth.abi.encodeParameters(
+    ['address'],
+    [addressToVerify]
+  );
 
   const encoded_data = functionSignature + encodedParams.slice(2);
 
-  const url = 'https://linea-goerli.infura.io/v3/e0f8e927116448549412b47e1f12bfe9';
+  const url =
+    'https://linea-goerli.infura.io/v3/e0f8e927116448549412b47e1f12bfe9';
 
   const headers = {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
   };
 
   const body = JSON.stringify({
@@ -38,9 +43,9 @@ export async function checkResult(addressToVerify?: string) {
         value: '',
         data: encoded_data,
       },
-      'latest'
+      'latest',
     ],
-    id: 1
+    id: 1,
   });
 
   const requestOptions: RequestInit = {
