@@ -22,7 +22,7 @@ So that you can install the Snap. Currently, we deployed [our contract](https://
 
 Currently, I have put my address 0x17c57bD297175e5711Ee3Daf045252B588f3162F on the allowlist for testing, you could try to transfer test ETH to this address, you will be able to get the notification.
 
-More information, please refer to the demo video: TODO
+More information, please refer to the demo video: <https://www.youtube.com/watch?v=wozvbW8mlHA>
 
 ## Future plans
 
